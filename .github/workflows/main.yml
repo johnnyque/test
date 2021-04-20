@@ -29,4 +29,4 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       - name: Build image
-        run: docker build . --file Dockerfile --tag mcu01050435/test   
+        run: docker build . --tag mcu01050435/test   
