@@ -23,10 +23,10 @@ jobs:
      # Steps represent a sequence of tasks that will be executed as part of the job
      steps:
      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-     - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
  ​
      # Runs a single command using the runners shell
-    - name: Build image
+      - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
         # 登录到 dockerhub，使用 GitHub secrets 传入账号密码，密码被加密存储在 GitHub 服务器，添加方法见下图。
       - name: Log into registry
