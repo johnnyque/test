@@ -33,6 +33,6 @@ jobs:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: bengotch/simplewhale:latest
+          tags: mcu01050435/test:latest
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
