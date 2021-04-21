@@ -33,3 +33,5 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build the Docker image
         run: docker build . --file Dockerfile --tag mcu01050435/test
+      - name: Push image
+        run: docker push mcu01050435/test:latest
