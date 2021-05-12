@@ -1,3 +1,4 @@
+
 # This is a basic workflow to help you get started with Actions
 
 name: CI
@@ -5,8 +6,12 @@ name: CI
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  pull_request:
+  # pull_request:
+  #   branches: [ dev ]
+  push:
     branches: [ main ]
+  pull_request:
+    branches: [ master,dev, staging]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,14 +27,19 @@ jobs:
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          password:  ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
       # - name: Set up Docker Buildx
       #   id: buildx
       #   uses: docker/setup-buildx-action@v1
       # - name: Build image
       #   run: docker build . --file Dockerfile --tag mcu01050435/test  
       - uses: actions/checkout@v2
+      - name: Set $VERSION variable
+        id: version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF)
+      - name: Get branch name
+        run: echo 'The branch name is' ${{ steps.version.outputs.VERSION }}
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag mcu01050435/test
+        run: docker build . --file Dockerfile --tag pimq/parameter-influxdb:${{ steps.version.outputs.VERSION }}
       - name: Push image
-        run: docker push mcu01050435/test:latest
+        run: docker push pimq/parameter-influxdb:${{ steps.version.outputs.VERSION }}
